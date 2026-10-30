@@ -11,7 +11,7 @@ COLOR_RESET="\e[0m"   # Сброс
 PROMPT_STANDARD="\n\n\n\n\n\e[5A\[${COLOR_LINE}\]--------------------------------------------------------------------------\[${COLOR_RESET}\]\n\[${COLOR_TEXT}\]\u@\h:\w\\\$ \[${COLOR_ARROW}\]➜\[${COLOR_RESET}\] "
 
 # 2. Кастом: двойная рамка + IP-АДРЕС (вместо имени) + время
-PROMPT_CUSTOM_IP="\n\n\n\n\n\e[5A\[${COLOR_LINE}\]--------------------------------------------------------------------------\[${COLOR_RESET}\]\n          \[${COLOR_LINE}\][\[${COLOR_RESET}\]\[${COLOR_TEXT}\]\$(hostname -I | awk '{print \$1}')\[${COLOR_RESET}\] \[${COLOR_LINE}\]|\[${COLOR_RESET}\] \[${COLOR_ARROW}\]\t\[${COLOR_RESET}\]\[${COLOR_LINE}\]]\[${COLOR_RESET}\]\n\[${COLOR_LINE}\]--------------------------------------------------------------------------\[${COLOR_RESET}\]\n\[${COLOR_TEXT}\]\u@\h:\w\\\$ \[${COLOR_ARROW}\]➜\[${COLOR_RESET}\] "
+PROMPT_CUSTOM_IP="\n\n\n\n\n\e[5A\[${COLOR_LINE}\]------------------------------------------------------------------------------------######\[${COLOR_RESET}\]\n          \[${COLOR_LINE}\][\[${COLOR_RESET}\]\[${COLOR_TEXT}\]\$(hostname -I | awk '{print \$1}')\[${COLOR_RESET}\] \[${COLOR_LINE}\]|\[${COLOR_RESET}\] \[${COLOR_ARROW}\]\t\[${COLOR_RESET}\]\[${COLOR_LINE}\]]\[${COLOR_RESET}\]\n\[${COLOR_LINE}\]------------------------------------------------------------------------------------######\[${COLOR_RESET}\]\n\[${COLOR_TEXT}\]\u@\h:\w\\\$ \[${COLOR_ARROW}\]➜\[${COLOR_RESET}\] "
 
 # --- ФУНКЦИЯ ПРИМЕНЕНИЯ ---
 apply_prompt() {
