@@ -6,12 +6,17 @@ COLOR_TEXT="\e[32m"   # Зеленый (приглашение)
 COLOR_ARROW="\e[33m"  # Желтый (стрелка)
 COLOR_RESET="\e[0m"   # Сброс
 
-# --- ВАРИАНТЫ ПРИГЛАШЕНИЙ ---
-# 1. Стандарт: одна линия + отступ снизу 5 строк
-PROMPT_STANDARD="\n\n\n\n\n\e[5A\[${COLOR_LINE}\]--------------------------------------------------------------------------\[${COLOR_RESET}\]\n\[${COLOR_TEXT}\]\u@\h:\w\\\$ \[${COLOR_ARROW}\]➜\[${COLOR_RESET}\] "
+# --- ВЫЧИСЛЯЕМ IP ---
+SERVER_IP=$(hostname -I | awk '{print $1}')
+[ -z "$SERVER_IP" ] && SERVER_IP="NO-IP"
 
-# 2. Кастом: двойная рамка + IP-АДРЕС (вместо имени) + время
-PROMPT_CUSTOM_IP="\n\n\n\n\n\e[5A\[${COLOR_LINE}\]------------------------------------------------------------------------------------######\[${COLOR_RESET}\]\n          \[${COLOR_LINE}\][\[${COLOR_RESET}\]\[${COLOR_TEXT}\]\$(hostname -I | awk '{print \$1}')\[${COLOR_RESET}\] \[${COLOR_LINE}\]|\[${COLOR_RESET}\] \[${COLOR_ARROW}\]\t\[${COLOR_RESET}\]\[${COLOR_LINE}\]]\[${COLOR_RESET}\]\n\[${COLOR_LINE}\]------------------------------------------------------------------------------------######\[${COLOR_RESET}\]\n\[${COLOR_TEXT}\]\u@\h:\w\\\$ \[${COLOR_ARROW}\]➜\[${COLOR_RESET}\] "
+# --- ВАРИАНТ 1: Твой скорректированный стандарт ---
+# Линия, по центру IP | Время, линия, стрелка root... стрелка
+PROMPT_V1="\n\n\n\n\n\e[5A\[${COLOR_LINE}\]--------------------------------------------------------------------------------\[${COLOR_RESET}\]\n                                              \[${COLOR_TEXT}\]${SERVER_IP}  \[${COLOR_LINE}\]|\[${COLOR_RESET}\]  \[${COLOR_ARROW}\]\t\[${COLOR_RESET}\]\n\[${COLOR_LINE}\]--------------------------------------------------------------------------------\[${COLOR_RESET}\]\n\[${COLOR_ARROW}\]➜\[${COLOR_RESET}\] \[${COLOR_TEXT}\]\u@\h:\w\\\$ \[${COLOR_ARROW}\]➜\[${COLOR_RESET}\] "
+
+# --- ВАРИАНТ 2: Твой второй дизайн ---
+# Линия с IP в рамке, отступ, время | root стрелки, /n
+PROMPT_V2="\n\n\n\n\n\e[5A\[${COLOR_LINE}\]--------------------------------\[\e[0m\] \[${COLOR_TEXT}\]${SERVER_IP}\[\e[0m\] \[${COLOR_LINE}\]\]-------------------------------\[${COLOR_RESET}\]\n  \n\[${COLOR_ARROW}\]\t \[${COLOR_LINE}\]|\[${COLOR_RESET}\] \[${COLOR_TEXT}\]\u \[${COLOR_ARROW}\]➜➜\[${COLOR_RESET}\]|\n/n\n\[${COLOR_TEXT}\]\u@\h:\w\\\$ \[${COLOR_ARROW}\]➜\[${COLOR_RESET}\] "
 
 # --- ФУНКЦИЯ ПРИМЕНЕНИЯ ---
 apply_prompt() {
@@ -36,17 +41,17 @@ apply_prompt() {
 
 # --- МЕНЮ ВЫБОРА ---
 echo -e "\n=== Выберите стиль приглашения ==="
-echo "1) 📏 Стандарт (одна линия, имя сервера, зеленая строка, желтая стрелка)"
-echo "2) 🎨 Кастом с IP (двойная рамка, IP-адрес, время)"
+echo "1) 📏 Твой стандарт (IP | Время, ➜ root)"
+echo "2) 🎨 Второй вариант (IP в рамке, Время | root)"
 echo "3) 🔄 Сбросить на дефолт"
 read -p "Введите номер [1-3]: " choice
 
 case $choice in
     1)
-        apply_prompt "$PROMPT_STANDARD"
+        apply_prompt "$PROMPT_V1"
         ;;
     2)
-        apply_prompt "$PROMPT_CUSTOM_IP"
+        apply_prompt "$PROMPT_V2"
         ;;
     3)
         sed -i '/PS1=/d' ~/.bashrc
