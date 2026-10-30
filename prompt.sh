@@ -38,3 +38,4 @@ case $choice in
         ;;
     *) echo -e "\n❌ Неверный выбор." ;;
 esac
+
