@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Все варианты терминала</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            padding: 40px;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+        h2 {
+            color: #fff;
+            margin: 0 0 10px 0;
+            font-weight: 400;
+        }
+        .window {
+            background-color: #000;
+            width: 100%;
+            max-width: 950px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+        .header {
+            background-color: #1a1a1a;
+            padding: 10px 15px;
+            color: #888;
+            font-size: 13px;
+            border-bottom: 1px solid #333;
+        }
+        .body {
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 15px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .blue { color: #3b82f6; }
+        .green { color: #22c55e; }
+        .yellow { color: #eab308; }
+        .white { color: #ffffff; }
+        .code-block {
+            background-color: #111;
+            border: 1px solid #444;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 6px;
+            color: #ccc;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        .code-block span { color: #22c55e; } /* Подсветка для PS1 */
+    </style>
+</head>
+<body>
+
+    <!-- ВАРИАНТ 1 -->
+    <div style="width: 100%; max-width: 950px;">
+        <h2>Вариант 1: Стандарт с IP (две линии)</h2>
+        <div class="window">
+            <div class="header">root@1736516:~</div>
+            <div class="body">
+<span class="blue">--------------------------------------------------------------------------------</span>
+                                              <span class="green">94.141.160.166</span>  <span class="blue">|</span>  <span class="yellow">23:29:23</span>
+<span class="blue">--------------------------------------------------------------------------------</span>
+<span class="yellow">➜</span> <span class="green">root@1736516:~#</span> <span class="yellow">➜</span> 
+            </div>
+        </div>
+        <div class="code-block">PS1='\n\n\n\n\n\e[5A\[\e[34m\]--------------------------------------------------------------------------------\[\e[0m\]\n                                              \[\e[32m\]$(get_ip)  \[\e[34m\]|\[\e[0m\]  \[\e[33m\]\t\[\e[0m\]\n\[\e[34m\]--------------------------------------------------------------------------------\[\e[0m\]\n\[\e[33m\]➜\[\e[0m\] \[\e[32m\]\u@\h:\w\\\$ \[\e[33m\]➜\[\e[0m\] '</div>
+    </div>
+
+    <!-- ВАРИАНТ 2 -->
+    <div style="width: 100%; max-width: 950px;">
+        <h2>Вариант 2: Рамка с IP и временем</h2>
+        <div class="window">
+            <div class="header">root@1736516:~</div>
+            <div class="body">
+<span class="blue">----------------------------------------------|  </span> <span class="green">94.141.160.166</span> <span class="blue">  |----------------------------------------------</span>
+
+<span class="yellow">23:29:23</span> <span class="blue">|</span> <span class="green">root@1736516:~#</span> <span class="yellow">➜</span> 
+            </div>
+        </div>
+        <div class="code-block">PS1='\n\n\n\n\n\e[5A\[\e[34m\]----------------------------------------------|  \[\e[0m\] \[$(get_ip)\] \[\e[34m\]  |----------------------------------------------\[\e[0m\]\n\n\[\e[33m\]\t \[\e[34m\]|\[\e[0m\] \[\e[32m\]\u@\h:\w\\\$ \[\e[33m\]➜\[\e[0m\] '</div>
+    </div>
+
+    <!-- ВАРИАНТ 3 -->
+    <div style="width: 100%; max-width: 950px;">
+        <h2>Вариант 3: Минимализм (длинная линия)</h2>
+        <div class="window">
+            <div class="header">root@OpenWrt:~</div>
+            <div class="body">
+<span class="blue">--------------------------------------------------------------------------------------</span>
+
+<span class="yellow">21:09</span> <span class="blue">|</span> <span class="green">root@OpenWrt:~$</span> <span class="yellow">➜</span> 
+            </div>
+        </div>
+        <div class="code-block">PS1='\n\n\n\n\n\e[5A\[\e[34m\]--------------------------------------------------------------------------------------\[\e[0m\]\n\n\[\e[33m\]\t \[\e[34m\]|\[\e[0m\] \[\e[32m\]\u@\h:\w\\\$ \[\e[33m\]➜\[\e[0m\] '</div>
+    </div>
+
+</body>
+</html>
