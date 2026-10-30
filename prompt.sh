@@ -10,11 +10,8 @@ COLOR_RESET="\e[0m"   # Сброс
 # 1. Стандарт: одна линия + отступ снизу 5 строк
 PROMPT_STANDARD="\n\n\n\n\n\e[5A\[${COLOR_LINE}\]--------------------------------------------------------------------------\[${COLOR_RESET}\]\n\[${COLOR_TEXT}\]\u@\h:\w\\\$ \[${COLOR_ARROW}\]➜\[${COLOR_RESET}\] "
 
-# 2. Кастом: двойная рамка + имя сервера + время
-PROMPT_CUSTOM="\n\n\n\n\n\e[5A\[${COLOR_LINE}\]------------------------------------------------------------------------------------######\[${COLOR_RESET}\]\n          \[${COLOR_LINE}\][\[${COLOR_RESET}\]\[${COLOR_TEXT}\]\h\[${COLOR_RESET}\] \[${COLOR_LINE}\]|\[${COLOR_RESET}\] \[${COLOR_ARROW}\]\t\[${COLOR_RESET}\]\[${COLOR_LINE}\]]\[${COLOR_RESET}\]\n\[${COLOR_LINE}\]------------------------------------------------------------------------------------######\[${COLOR_RESET}\]\n\[${COLOR_TEXT}\]\u@\h:\w\\\$ \[${COLOR_ARROW}\]➜\[${COLOR_RESET}\] "
-
-# 3. Стандарт с IP: одна линия + отступ снизу 5 строк (вместо имени хоста - IP)
-PROMPT_STANDARD_IP="\n\n\n\n\n\e[5A\[${COLOR_LINE}\]--------------------------------------------------------------------------\[${COLOR_RESET}\]\n\[${COLOR_TEXT}\]\u@\$(hostname -I | awk '{print \$1}'):\w\\\$ \[${COLOR_ARROW}\]➜\[${COLOR_RESET}\] "
+# 2. Кастом: двойная рамка + IP-АДРЕС (вместо имени) + время
+PROMPT_CUSTOM_IP="\n\n\n\n\n\e[5A\[${COLOR_LINE}\]--------------------------------------------------------------------------\[${COLOR_RESET}\]\n          \[${COLOR_LINE}\][\[${COLOR_RESET}\]\[${COLOR_TEXT}\]\$(hostname -I | awk '{print \$1}')\[${COLOR_RESET}\] \[${COLOR_LINE}\]|\[${COLOR_RESET}\] \[${COLOR_ARROW}\]\t\[${COLOR_RESET}\]\[${COLOR_LINE}\]]\[${COLOR_RESET}\]\n\[${COLOR_LINE}\]--------------------------------------------------------------------------\[${COLOR_RESET}\]\n\[${COLOR_TEXT}\]\u@\h:\w\\\$ \[${COLOR_ARROW}\]➜\[${COLOR_RESET}\] "
 
 # --- ФУНКЦИЯ ПРИМЕНЕНИЯ ---
 apply_prompt() {
@@ -40,22 +37,18 @@ apply_prompt() {
 # --- МЕНЮ ВЫБОРА ---
 echo -e "\n=== Выберите стиль приглашения ==="
 echo "1) 📏 Стандарт (одна линия, имя сервера, зеленая строка, желтая стрелка)"
-echo "2) 🎨 Кастом (двойная рамка, имя сервера, время)"
-echo "3) 🌐 Стандарт с IP (одна линия, IP вместо имени сервера)"
-echo "4) 🔄 Сбросить на дефолт"
-read -p "Введите номер [1-4]: " choice
+echo "2) 🎨 Кастом с IP (двойная рамка, IP-адрес, время)"
+echo "3) 🔄 Сбросить на дефолт"
+read -p "Введите номер [1-3]: " choice
 
 case $choice in
     1)
         apply_prompt "$PROMPT_STANDARD"
         ;;
     2)
-        apply_prompt "$PROMPT_CUSTOM"
+        apply_prompt "$PROMPT_CUSTOM_IP"
         ;;
     3)
-        apply_prompt "$PROMPT_STANDARD_IP"
-        ;;
-    4)
         sed -i '/PS1=/d' ~/.bashrc
         source ~/.bashrc
         clear
