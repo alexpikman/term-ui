@@ -103,7 +103,7 @@
 <span class="yellow">21:09</span> <span class="blue">|</span> <span class="green">root@OpenWrt:~$</span> <span class="yellow">➜</span> 
             </div>
         </div>
-        <div class="code-block">PS1='\n\n\n\n\n\e[5A\[\e[34m\]--------------------------------------------------------------------------------------\[\e[0m\]\n\n\[\e[33m\]\t \[\e[34m\]|\[\e[0m\] \[\e[32m\]\u@\h:\w\\\$ \[\e[33m\]➜\[\e[0m\] '</div>
+        <div class="code-block">sed -i '/^PS1=/d' ~/.bashrc && echo "PS1='\n\n\n\n\n\e[5A\[\e[34m\]--------------------------------------------------------------------------------------\[\e[0m\]\n\n\[\e[33m\]\t \[\e[34m\]|\[\e[0m\] \[\e[32m\]\u@\h:\w\\\$ \[\e[33m\]➜\[\e[0m\] '" >> ~/.bashrc && source ~/.bashrc</div>
     </div>
 
 </body>
