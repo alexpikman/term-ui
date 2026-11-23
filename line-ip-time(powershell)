@@ -32,3 +32,42 @@ Set-Content -Path $PROFILE -Value $customPrompt -Encoding UTF8
 
 # Применяем
 . $PROFILE
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+$customPrompt = @'
+function prompt {
+    # Ищем реальный IP
+    $ipObj = Get-NetIPAddress -AddressFamily IPv4 | Where-Object { 
+        $_.IPAddress -notmatch "^169\.254\." -and 
+        $_.IPAddress -ne "127.0.0.1" -and
+        $_.InterfaceAlias -notmatch "Loopback|vEthernet|Virtual|WSL|Hyper-V" 
+    } | Sort-Object -Property InterfaceAlias -Descending | Select-Object -First 1
+    
+    $ip = if ($ipObj) { $ipObj.IPAddress } else { "Нет сети" }
+    
+    $time = Get-Date -Format "HH:mm:ss"
+    $path = (Get-Location).Path
+    
+    $e = [char]27
+    $green  = "$e[32m"
+    $yellow = "$e[33m"
+    $cyan   = "$e[36m"
+    $red    = "$e[31m"
+    $reset  = "$e[0m"
+
+    $ipColor = if ($ip -eq "Нет сети") { $red } else { $cyan }
+
+    # Верхняя строка с IP и временем
+    $line = "$green" + "-" * 30 + "|$ipColor $ip $green|$yellow $time $green|" + "-" * 30 + "$reset"
+    
+    # Нижняя строка: стрелочка, путь и снова стрелочка
+    $promptLine = "$yellow ➜ $cyan$path $yellow➜$reset "
+
+    return "`n$line`n`n$promptLine"
+}
+'@
+
+Set-Content -Path $PROFILE -Value $customPrompt -Encoding UTF8
+. $PROFILE
